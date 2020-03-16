@@ -2,20 +2,15 @@ name: Nodejs Yarn CI
 
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-# on:
-#   push:
-#     tags:
-#       - "*"
+    tags:
+      - "*"
 
 jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node: [12.x, 13.x]
+        os: [ubuntu-latest]
+        node: [12.x]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
@@ -42,7 +37,7 @@ jobs:
           yarn install
       - run: yarn lint
       - run: yarn test
-      # - run: yarn build
-      # - run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
