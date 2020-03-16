@@ -6,7 +6,7 @@
 import { readFile } from "fs-extra";
 import probe from "probe-image-size";
 import sharp from "sharp";
-import { basename } from "path";
+import { basename, extname } from "path";
 import fetch from "node-fetch";
 
 import PicGo from 'picgo'
@@ -23,9 +23,10 @@ async function handle(ctx) {
           .webp({ lossless: true })
           .toBuffer();
         const { width, height } = probe.sync(buffer);
+        const name = basename(item, extname(item))
         ctx.output.push({
           buffer: buffer,
-          fileName: basename(item),
+          fileName: name + '.webp',
           width: width,
           height: height,
           extname: "webp"

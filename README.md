@@ -1,4 +1,5 @@
-## picgo-plugin-webp
+## picgo-plugin-sharp
 
-webp transformer
+image transformer plugin based sharp
+
 > ClI only

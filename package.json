@@ -1,7 +1,7 @@
 {
-  "name": "picgo-plugin-webp",
+  "name": "picgo-plugin-sharp",
   "version": "1.0.0",
-  "description": "webp transformer",
+  "description": "image transformer plugin based sharp",
   "main": "dist/index.js",
   "publishConfig": {
     "access": "public"
