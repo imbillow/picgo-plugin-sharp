@@ -65,10 +65,10 @@ async function handle(ctx: PicGo) {
 export = function (ctx) {
   return {
     register: () => {
-      ctx.helper.transformer.register("webp", {
+      ctx.helper.transformer.register("sharp", {
         handle
       })
     },
-    transformer: "webp"
+    transformer: "sharp"
   }
 }
