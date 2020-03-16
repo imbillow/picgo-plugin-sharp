@@ -10,7 +10,7 @@ import { basename, extname } from "path"
 import request from "request"
 import PicGo from "picgo"
 
-async function fetch(ctx: PicGo, url: string) {
+async function fetch(ctx: PicGo, url: string): Promise<Buffer> {
   return await ctx.Request
     .request({ method: 'Get', url, encoding: null })
     .on('response', (response: request.Response): void => {
@@ -22,19 +22,19 @@ async function fetch(ctx: PicGo, url: string) {
     })
 }
 
-const urlFileName = (url: string) {
+const urlFileName = (url: string): string => {
   const _ = url.split('?')[0]
   return basename(_, extname(_))
 }
 
-async function handle(ctx: PicGo) {
+async function handle(ctx: PicGo): Promise<PicGo> {
   await Promise.all(
     ctx.input.map(async item => {
       try {
         let buffer: Buffer = /https?:\/\//.test(item) ?
           await fetch(ctx, item) :
           await readFile(item)
-        let name: string = urlFileName(item)
+        const name: string = urlFileName(item)
 
         try {
           buffer = await sharp(buffer)
@@ -62,9 +62,10 @@ async function handle(ctx: PicGo) {
   return ctx
 }
 
-export = function (ctx) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export = function (ctx: PicGo): any {
   return {
-    register: () => {
+    register: (): void => {
       ctx.helper.transformer.register("sharp", {
         handle
       })

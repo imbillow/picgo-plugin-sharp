@@ -6,14 +6,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "",
+  "homepage": "https://github.com/iovw/picgo-plugin-sharp",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"no test specified\"",
+    "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
-    "patch": "npm version patch && git push origin master && git push origin --tags",
-    "minor": "npm version minor && git push origin master && git push origin --tags",
-    "major": "npm version major && git push origin master && git push origin --tags"
+    "publish": "yarn npm publish",
+    "patch": "yarn --patch && git push origin master && git push origin --tags",
+    "minor": "yarn --minor && git push origin master && git push origin --tags",
+    "major": "yarn --major && git push origin master && git push origin --tags"
   },
   "keywords": [
     "picgo",
@@ -23,18 +25,12 @@
   "license": "MIT",
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
-    "@types/image-size": "^0.0.29",
     "@types/node": "^10.17.17",
     "@types/sharp": "^0.24.0",
-    "eslint": "^5.0.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "eslint": "^6.8.0",
     "picgo": "^1.4.0",
-    "tslint": "^5.10.0",
-    "tslint-config-standard": "^7.1.0",
     "typescript": "^3.7.3"
   },
   "dependencies": {
