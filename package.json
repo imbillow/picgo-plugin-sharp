@@ -1,14 +1,16 @@
 {
   "name": "picgo-plugin-webp",
   "version": "1.0.0",
-  "description": "Auto convert image to webb format",
-  "main": "src/index.js",
+  "description": "webp transformer",
+  "main": "dist/index.js",
   "publishConfig": {
     "access": "public"
   },
   "homepage": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p .",
+    "dev": "tsc -w -p .",
     "patch": "npm version patch && git push origin master && git push origin --tags",
     "minor": "npm version minor && git push origin master && git push origin --tags",
     "major": "npm version major && git push origin master && git push origin --tags"
@@ -19,8 +21,22 @@
   ],
   "author": "iovw",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.10.1",
+    "picgo": "^1.4.0",
+    "tslint": "^5.10.0",
+    "tslint-config-standard": "^7.1.0",
+    "typescript": "^3.7.3",
+    "eslint": "^5.0.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0"
+  },
   "dependencies": {
+    "node-fetch": "^2.6.0",
+    "probe-image-size": "^5.0.0",
     "sharp": "^0.25.1"
   }
 }

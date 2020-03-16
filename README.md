@@ -1,4 +1,4 @@
 ## picgo-plugin-webp
 
-Auto convert image to webb format
+webp transformer
 > ClI only
