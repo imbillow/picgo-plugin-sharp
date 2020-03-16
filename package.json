@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-sharp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "image transformer plugin based sharp",
   "main": "dist/index.js",
   "publishConfig": {
@@ -13,9 +13,9 @@
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
     "publish": "yarn npm publish",
-    "patch": "yarn --patch && git push origin master && git push origin --tags",
-    "minor": "yarn --minor && git push origin master && git push origin --tags",
-    "major": "yarn --major && git push origin master && git push origin --tags"
+    "patch": "yarn version --patch && git push origin master && git push origin --tags",
+    "minor": "yarn version --minor && git push origin master && git push origin --tags",
+    "major": "yarn version --major && git push origin master && git push origin --tags"
   },
   "keywords": [
     "picgo",
