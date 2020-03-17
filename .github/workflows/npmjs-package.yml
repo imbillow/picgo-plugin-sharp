@@ -1,4 +1,4 @@
-name: Nodejs Yarn CI
+name: Npm Package Publish
 
 on:
   push:

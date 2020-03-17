@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-sharp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Image transformer plugin, Can be used for image compression",
   "main": "dist/index.js",
   "publishConfig": {
