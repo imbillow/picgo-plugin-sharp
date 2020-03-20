@@ -51,7 +51,7 @@ async function handle(ctx: PicGo): Promise<PicGo> {
           fileName: name + '.webp',
           width: width,
           height: height,
-          extname: "webp"
+          extname: ".webp"
         })
       } catch (e) {
         ctx.log.error(e)
