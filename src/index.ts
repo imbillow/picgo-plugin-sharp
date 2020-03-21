@@ -9,6 +9,7 @@ import sharp from "sharp"
 import { basename, extname } from "path"
 import request from "request"
 import PicGo from "picgo"
+import { PluginConfig } from "picgo/dist/src/utils/interfaces"
 
 async function fetch(ctx: PicGo, url: string): Promise<Buffer> {
   return await ctx.Request
@@ -22,36 +23,53 @@ async function fetch(ctx: PicGo, url: string): Promise<Buffer> {
     })
 }
 
-const urlFileName = (url: string): string => {
+function realBaseName(url: string): string {
   const _ = url.split('?')[0]
   return basename(_, extname(_))
 }
 
 async function handle(ctx: PicGo): Promise<PicGo> {
+  const cfg = ctx.getConfig('transformer.sharp')
+  const outputType: string = cfg.outputType
+  const outputOptions = cfg.options[outputType]
+  const transformFn = (new Map([
+    ['jpeg', async (buffer: Buffer) =>
+      await sharp(buffer)
+        .jpeg(outputOptions)
+        .toBuffer()],
+    ['png', async (buffer: Buffer) =>
+      await sharp(buffer)
+        .png(outputOptions)
+        .toBuffer()],
+    ['webp', async (buffer: Buffer) =>
+      await sharp(buffer)
+        .webp(outputOptions)
+        .toBuffer()],
+  ])).get(outputType)
+
   await Promise.all(
     ctx.input.map(async item => {
       try {
         let buffer: Buffer = /https?:\/\//.test(item) ?
           await fetch(ctx, item) :
           await readFile(item)
-        const name: string = urlFileName(item)
-
         try {
-          buffer = await sharp(buffer)
-            .webp({ lossless: true })
-            .toBuffer()
+          buffer = await transformFn(buffer)
           ctx.log.success(`${item} convert successful`)
         } catch (e) {
           ctx.log.error(`can't convert file ${item}`)
           throw new Error(e)
         }
+
+        const name: string = realBaseName(item)
+        const extname: string = '.' + outputType
         const { width, height } = probe.sync(buffer)
         ctx.output.push({
           buffer: buffer,
-          fileName: name + '.webp',
+          fileName: name + extname,
           width: width,
           height: height,
-          extname: ".webp"
+          extname: extname
         })
       } catch (e) {
         ctx.log.error(e)
@@ -62,14 +80,27 @@ async function handle(ctx: PicGo): Promise<PicGo> {
   return ctx
 }
 
+function configFn(_: PicGo): PluginConfig[] {
+  return [
+    {
+      name: 'outputType',
+      type: 'list',
+      choice: ['jpeg', 'png', 'webp',],
+      default: 'webp',
+      required: true
+    }
+  ]
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export = function (ctx: PicGo): any {
+export = function(ctx: PicGo): any {
   return {
     register: (): void => {
       ctx.helper.transformer.register("sharp", {
         handle
       })
     },
-    transformer: "sharp"
+    transformer: "sharp",
+    config: configFn
   }
 }
