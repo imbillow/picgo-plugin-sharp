@@ -8,8 +8,8 @@
   },
   "homepage": "https://github.com/iovw/picgo-plugin-sharp",
   "scripts": {
-    "test": "echo \"no test specified\"",
-    "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
+    "test": "no test",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
-    "probe-image-size": "^5.0.0",
+    "image-size": "^0.8.3",
     "sharp": "^0.25.1"
   }
 }
