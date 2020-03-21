@@ -8,7 +8,7 @@
   },
   "homepage": "https://github.com/iovw/picgo-plugin-sharp",
   "scripts": {
-    "test": "no test",
+    "test": "echo 'no test'",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
