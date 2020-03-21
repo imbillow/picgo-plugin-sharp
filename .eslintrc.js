@@ -6,5 +6,15 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
-  ]
+  ],
+  env: {
+    "node": true
+  },
+  parserOptions: {
+    ecmaVersion: 11,
+    sourceType: "module",
+    ecmaFeatures: {
+        jsx: true
+    }
+},
 };

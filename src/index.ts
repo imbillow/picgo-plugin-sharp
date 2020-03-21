@@ -29,13 +29,9 @@ function realBaseName(url: string): string {
 }
 
 async function handle(ctx: PicGo): Promise<PicGo> {
-  const cfg = ctx.getConfig('transformer.sharp') ||
-  {
-    outputType: 'webp',
-    options: {}
-  }
-  const outputType: string = cfg.outputType
-  const outputOptions = cfg.options[outputType]
+  const cfg = ctx.getConfig('transformer.sharp')
+  const outputType: string = cfg?.outputType ?? 'webp'
+  const outputOptions = cfg?.options?.[outputType]
   const transformFn = (new Map([
     ['jpeg', async (buffer: Buffer): Promise<Buffer> =>
       await sharp(buffer)
@@ -59,7 +55,7 @@ async function handle(ctx: PicGo): Promise<PicGo> {
           await readFile(item)
         try {
           buffer = await transformFn(buffer)
-          ctx.log.success(`${item} convert successful`)
+          ctx.log.success(`${item} convert to ${outputType} successful`)
         } catch (e) {
           ctx.log.error(`can't convert file ${item}`)
           throw new Error(e)
