@@ -1,6 +1,6 @@
 {
   "name": "picgo-plugin-sharp",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Image transformer plugin, Can be used for image compression",
   "main": "dist/index.js",
   "publishConfig": {
@@ -8,8 +8,8 @@
   },
   "homepage": "https://github.com/iovw/picgo-plugin-sharp",
   "scripts": {
-    "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "test": "no test",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "build": "tsc -p .",
     "dev": "tsc -w -p .",
     "patch": "yarn version --patch && git push origin master && git push origin --tags",
