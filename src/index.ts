@@ -4,17 +4,17 @@
  */
 
 import { readFile } from "fs-extra"
-import probe from "probe-image-size"
+import { imageSize } from "image-size"
 import sharp from "sharp"
 import { basename, extname } from "path"
-import request from "request"
+import { Response } from "request"
 import PicGo from "picgo"
 import { PluginConfig } from "picgo/dist/src/utils/interfaces"
 
 async function fetch(ctx: PicGo, url: string): Promise<Buffer> {
   return await ctx.Request
     .request({ method: 'Get', url, encoding: null })
-    .on('response', (response: request.Response): void => {
+    .on('response', (response: Response): void => {
       const contentType = response.headers['content-type']
       if (!contentType.includes('image')) {
         ctx.log.error("headers:\n" + JSON.stringify(response.headers, null, 2))
@@ -29,7 +29,11 @@ function realBaseName(url: string): string {
 }
 
 async function handle(ctx: PicGo): Promise<PicGo> {
-  const cfg = ctx.getConfig('transformer.sharp')
+  const cfg = ctx.getConfig('transformer.sharp') ||
+  {
+    outputType: 'webp',
+    options: {}
+  }
   const outputType: string = cfg.outputType
   const outputOptions = cfg.options[outputType]
   const transformFn = (new Map([
@@ -63,7 +67,7 @@ async function handle(ctx: PicGo): Promise<PicGo> {
 
         const name: string = realBaseName(item)
         const extname: string = '.' + outputType
-        const { width, height } = probe.sync(buffer)
+        const { width, height } = imageSize(buffer)
         ctx.output.push({
           buffer: buffer,
           fileName: name + extname,
