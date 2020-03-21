@@ -33,15 +33,15 @@ async function handle(ctx: PicGo): Promise<PicGo> {
   const outputType: string = cfg.outputType
   const outputOptions = cfg.options[outputType]
   const transformFn = (new Map([
-    ['jpeg', async (buffer: Buffer) =>
+    ['jpeg', async (buffer: Buffer): Promise<Buffer> =>
       await sharp(buffer)
         .jpeg(outputOptions)
         .toBuffer()],
-    ['png', async (buffer: Buffer) =>
+    ['png', async (buffer: Buffer): Promise<Buffer> =>
       await sharp(buffer)
         .png(outputOptions)
         .toBuffer()],
-    ['webp', async (buffer: Buffer) =>
+    ['webp', async (buffer: Buffer): Promise<Buffer> =>
       await sharp(buffer)
         .webp(outputOptions)
         .toBuffer()],
@@ -80,6 +80,7 @@ async function handle(ctx: PicGo): Promise<PicGo> {
   return ctx
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function configFn(_: PicGo): PluginConfig[] {
   return [
     {
